@@ -1,0 +1,62 @@
+@model Siparis
+@{
+    ViewData["Title"] = "Yeni Sipariş Oluştur";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Sipariş Ekleme</h1>
+
+<div class="container mt-5">
+
+    <div class="card-body">
+        <form method="post" asp-action="Create" asp-controller="Siparis">
+
+            <div class="mb-3">
+                <label for="KullaniciID" class="form-label fw-bold">Kullanıcı</label>
+                <select asp-for="KullaniciID" class="form-control">
+                    <option value="">-- Kullanıcı Seçiniz --</option>
+                    @foreach (var kullanici in ViewBag.Kullanicilar)
+                    {
+                        <option value="@kullanici.ID">@kullanici.AdSoyad</option>
+                    }
+                </select>
+                <span asp-validation-for="KullaniciID" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label for="SepetID" class="form-label fw-bold">Sepet</label>
+                <select asp-for="SepetID" class="form-control">
+                    <option value="">-- Sepet Seçiniz --</option>
+                    @foreach (var sepet in ViewBag.Sepetler)
+                    {
+                        <option value="@sepet.ID">Sepet #@sepet.ID</option>
+                    }
+                </select>
+                <span asp-validation-for="SepetID" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label for="ToplamTutar" class="form-label fw-bold">Toplam Tutar</label>
+                <input type="number" step="0.01" asp-for="ToplamTutar" class="form-control" placeholder="Toplam tutar giriniz">
+                <span asp-validation-for="ToplamTutar" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label for="Tarih" class="form-label fw-bold">Tarih</label>
+                <input type="datetime-local" asp-for="Tarih" class="form-control">
+                <span asp-validation-for="Tarih" class="text-danger"></span>
+            </div>
+
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary btn-lg">
+                    <i class="bi bi-check-circle me-2"></i>Sipariş Ekle
+                </button>
+                <a asp-action="List" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left me-2"></i>Geri Dön
+                </a>
+            </div>
+
+        </form>
+    </div>
+
+</div>

@@ -1,0 +1,53 @@
+@model List<SiparisViewModel>
+@{
+    ViewData["Title"] = "Sipariş Listesi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-12 col-lg-12 col-xxl-12 d-flex">
+	<div class="card flex-fill">
+
+		<div style="display:flex; justify-content:space-between; align-items:center">
+			<div class="card-header">
+				<h5 class="card-title mb-0">Siparişler</h5>
+			</div>
+			<div>
+				<a href="/Siparis/Create" class="btn btn-success btn-sm">
+					➕ Yeni Sipariş Ekle
+				</a>
+			</div>
+		</div>
+
+		<br />
+
+		<table class="table table-hover my-0">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Kullanıcı Adı</th>
+					<th>Sepet ID</th>
+					<th>Toplam Tutar</th>
+					<th>Tarih</th>
+					<th>Güncelle</th>
+					<th>Sil</th>
+				</tr>
+			</thead>
+			<tbody>
+
+				@foreach (var item in Model)
+				{
+					<tr>
+						<td><span class="badge bg-secondary">@item.ID</span></td>
+						<td><span class="badge bg-info">@item.AdSoyad</span></td>
+						<td><span class="badge bg-primary">@item.SepetID</span></td>
+						<td><span class="badge bg-success">@item.ToplamTutar.ToString("C2")</span></td>
+						<td><span class="badge bg-warning">@item.Tarih.ToString("dd.MM.yyyy HH:mm")</span></td>
+						<td><a href="/Siparis/Update/@item.ID" class="badge bg-primary">Güncelle</a></td>
+						<td><a href="/Siparis/Delete/@item.ID" class="badge bg-danger">Sil</a></td>
+					</tr>
+				}
+
+			</tbody>
+		</table>
+	</div>
+</div>

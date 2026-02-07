@@ -1,0 +1,72 @@
+@model SepetIcerigi
+@{
+    ViewData["Title"] = "Sepet İçeriği Ekle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Sepet İçeriği Ekleme</h1>
+
+<div class="container mt-5">
+
+    <div class="card-body">
+        <form method="post" asp-action="Create" asp-controller="SepetIcerigi">
+
+            <div class="mb-3">
+                <label for="SepetID" class="form-label fw-bold">Sepet</label>
+                <select asp-for="SepetID" class="form-control">
+                    <option value="">-- Sepet Seçiniz --</option>
+                    @foreach (var sepet in ViewBag.Sepetler)
+                    {
+                        if (ViewBag.SelectedSepetID != null && sepet.ID == ViewBag.SelectedSepetID)
+                        {
+                            <option value="@sepet.ID" selected>Sepet ID: @sepet.ID</option>
+                        }
+                        else
+                        {
+                            <option value="@sepet.ID">Sepet ID: @sepet.ID</option>
+                        }
+                    }
+                </select>
+                <span asp-validation-for="SepetID" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label for="UrunID" class="form-label fw-bold">Ürün</label>
+                <select asp-for="UrunID" class="form-control">
+                    <option value="">-- Ürün Seçiniz --</option>
+                    @foreach (var urun in ViewBag.Urunler)
+                    {
+                        <option value="@urun.ID">@urun.UrunAdi - @urun.Fiyat.ToString("C2")</option>
+                    }
+                </select>
+                <span asp-validation-for="UrunID" class="text-danger"></span>
+            </div>
+
+            <div class="mb-4">
+                <label for="Adet" class="form-label fw-bold">Adet</label>
+                <input type="number" asp-for="Adet" class="form-control" placeholder="Ürün adedini giriniz" min="1" value="1" />
+                <span asp-validation-for="Adet" class="text-danger"></span>
+            </div>
+
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary btn-lg">
+                    <i class="bi bi-check-circle me-2"></i>Ürün Ekle
+                </button>
+                @if (ViewBag.SelectedSepetID != null)
+                {
+                    <a asp-action="List" asp-route-sepetId="@ViewBag.SelectedSepetID" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left me-2"></i>Geri Dön
+                    </a>
+                }
+                else
+                {
+                    <a asp-action="List" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left me-2"></i>Geri Dön
+                    </a>
+                }
+            </div>
+
+        </form>
+    </div>
+
+</div>

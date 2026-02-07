@@ -1,0 +1,68 @@
+﻿@model List<Urun>
+@{
+    ViewData["Title"] = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-12 col-lg-12 col-xxl-12 d-flex">
+	<div class="card flex-fill">
+
+		<div style="display:flex; justify-content:space-between; align-items:center">
+			<div class="card-header">
+
+				<h5 class="card-title mb-0">Ürünler</h5>
+
+
+			</div>
+			<div>
+				<a href="/Urun/Create" class="btn btn-success btn-sm">
+					➕ Yeni Ürün Ekle
+				</a>
+			</div>
+		</div>
+
+		<br />
+
+		<table class="table table-hover my-0">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Urun Adı</th>
+					<th>ResimUrl</th>
+					<th>Fiyat</th>
+					<th>Stok</th>
+
+					<th>Güncelle</th>
+					<th>Sil</th>
+				</tr>
+			</thead>
+			<tbody>
+
+				@foreach (var item in Model)
+				{
+					<tr>
+
+						<td><span class="badge bg-secondary">@item.ID</span></td>
+						<td><span class="badge bg-warning">@item.UrunAdi</span></td>
+
+						<td>
+							<img src="@item.ResimUrl" class="img-thumbnail" width="80" />
+						</td>
+
+						<td><span class="badge bg-success">@item.Fiyat</span></td>
+						<td><span class="badge bg-success">@item.Stok</span></td>
+
+						<td><a href="/Urun/Update/@item.ID" class="badge bg-primary">Güncelle</a></td>
+						<td><a href="/Urun/Delete/@item.ID" class="badge bg-danger">Sil</a></td>
+
+					</tr>
+
+
+				}
+
+
+			</tbody>
+		</table>
+	</div>
+</div>
+

@@ -1,0 +1,98 @@
+@model List<SepetIcerigiViewModel>
+@{
+    ViewData["Title"] = "Sepet İçeriği";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-12 col-lg-12 col-xxl-12 d-flex">
+	<div class="card flex-fill">
+
+		<div style="display:flex; justify-content:space-between; align-items:center">
+			<div class="card-header">
+				<h5 class="card-title mb-0">
+					Sepet İçeriği 
+					@if (ViewBag.SepetID != null)
+					{
+						<span class="badge bg-info">Sepet ID: @ViewBag.SepetID</span>
+					}
+				</h5>
+			</div>
+			<div>
+				@if (ViewBag.SepetID != null)
+				{
+					<a href="/SepetIcerigi/Create?sepetId=@ViewBag.SepetID" class="btn btn-success btn-sm">
+						➕ Ürün Ekle
+					</a>
+					<a href="/Sepet/List" class="btn btn-secondary btn-sm">
+						🔙 Sepetlere Dön
+					</a>
+				}
+				else
+				{
+					<a href="/SepetIcerigi/Create" class="btn btn-success btn-sm">
+						➕ Yeni İçerik Ekle
+					</a>
+				}
+			</div>
+		</div>
+
+		<br />
+
+		<table class="table table-hover my-0">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Sepet ID</th>
+					<th>Kullanıcı</th>
+					<th>Ürün Resmi</th>
+					<th>Ürün Adı</th>
+					<th>Fiyat</th>
+					<th>Adet</th>
+					<th>Toplam</th>
+					<th>Güncelle</th>
+					<th>Sil</th>
+				</tr>
+			</thead>
+			<tbody>
+
+				@if (Model.Count == 0)
+				{
+					<tr>
+						<td colspan="10" class="text-center">
+							<span class="badge bg-warning">Bu sepette ürün bulunmamaktadır</span>
+						</td>
+					</tr>
+				}
+				else
+				{
+					decimal genelToplam = 0;
+					@foreach (var item in Model)
+					{
+						decimal satirToplam = item.Fiyat * item.Adet;
+						genelToplam += satirToplam;
+						
+						<tr>
+							<td><span class="badge bg-secondary">@item.ID</span></td>
+							<td><span class="badge bg-info">@item.SepetID</span></td>
+							<td><span class="badge bg-primary">@item.KullaniciAdi</span></td>
+							<td>
+								<img src="@item.ResimUrl" class="img-thumbnail" width="60" />
+							</td>
+							<td><span class="badge bg-warning">@item.UrunAdi</span></td>
+							<td><span class="badge bg-success">@item.Fiyat.ToString("C2")</span></td>
+							<td><span class="badge bg-dark">@item.Adet</span></td>
+							<td><span class="badge bg-success">@satirToplam.ToString("C2")</span></td>
+							<td><a href="/SepetIcerigi/Update/@item.ID" class="badge bg-primary">Güncelle</a></td>
+							<td><a href="/SepetIcerigi/Delete/@item.ID" class="badge bg-danger">Sil</a></td>
+						</tr>
+					}
+					<tr class="table-active">
+						<td colspan="7" class="text-end"><strong>Genel Toplam:</strong></td>
+						<td colspan="3"><strong><span class="badge bg-success fs-6">@genelToplam.ToString("C2")</span></strong></td>
+					</tr>
+				}
+
+			</tbody>
+		</table>
+	</div>
+</div>

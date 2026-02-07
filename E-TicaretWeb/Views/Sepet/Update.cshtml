@@ -1,0 +1,56 @@
+@model Sepet
+@{
+    ViewData["Title"] = "Sepet Güncelle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Sepet Güncelleme</h1>
+
+<div class="container mt-5">
+
+    <div class="card-body">
+        <form method="post" asp-action="Update" asp-controller="Sepet">
+
+            <input type="hidden" asp-for="ID" />
+
+            <div class="mb-3">
+                <label for="KullaniciID" class="form-label fw-bold">Kullanıcı</label>
+                <select asp-for="KullaniciID" class="form-control">
+                    <option value="">-- Kullanıcı Seçiniz --</option>
+                    @foreach (var kullanici in ViewBag.Kullanicilar)
+                    {
+                        <option value="@kullanici.ID" selected="@(kullanici.ID == Model.KullaniciID)">@kullanici.AdSoyad</option>
+                    }
+                </select>
+                <span asp-validation-for="KullaniciID" class="text-danger"></span>
+            </div>
+
+            <div class="mb-4">
+                <label for="Durum" class="form-label fw-bold">Sipariş Durumu</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" asp-for="Durum" value="true" id="durumEvet" checked="@(Model.Durum)">
+                    <label class="form-check-label" for="durumEvet">
+                        Evet (Sipariş Dönüştü)
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" asp-for="Durum" value="false" id="durumHayir" checked="@(!Model.Durum)">
+                    <label class="form-check-label" for="durumHayir">
+                        Hayır (Sipariş Dönüşmedi)
+                    </label>
+                </div>
+            </div>
+
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary btn-lg">
+                    <i class="bi bi-check-circle me-2"></i>Sepeti Güncelle
+                </button>
+                <a asp-action="List" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left me-2"></i>Geri Dön
+                </a>
+            </div>
+
+        </form>
+    </div>
+
+</div>

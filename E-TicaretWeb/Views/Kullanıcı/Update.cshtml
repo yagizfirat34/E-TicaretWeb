@@ -1,0 +1,47 @@
+﻿@model Kullanicı
+@{
+    ViewData["Title"] = "Update";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h1>Kullancı Güncelleme</h1>
+
+<div class="container mt-5">
+
+    <div class="card-body">
+        <form method="post" asp-action="Update" asp-controller="Kullanıcı">
+
+            <input type="hidden" name="Id" value="@Model.ID" />
+
+            <div class="mb-3">
+                <label for="AdSoyad" class="form-label fw-bold">Ad Soyad</label>
+                <input type="text" asp-for="AdSoyad" class="form-control" value="@Model.AdSoyad"/>
+                <span asp-validation-for="AdSoyad" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label for="Eposta" class="form-label fw-bold">E-posta</label>
+                <input type="email" asp-for="Eposta" class="form-control" value="@Model.Eposta" />
+                <span asp-validation-for="Eposta" class="text-danger"></span>
+            </div>
+
+            <div class="mb-4">
+                <label for="Sifre" class="form-label fw-bold">Şifre</label>
+                <input type="text" asp-for="Sifre" class="form-control" value="@Model.Sifre" />
+                <span asp-validation-for="Sifre" class="text-danger"></span>
+            </div>
+
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary btn-lg">
+                    <i class="bi bi-check-circle me-2"></i>Kullanıcı Güncelle
+                </button>
+                <a asp-action="Index" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left me-2"></i>Geri Dön
+                </a>
+            </div>
+
+        </form>
+    </div>
+
+</div>

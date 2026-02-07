@@ -1,0 +1,58 @@
+@model SepetIcerigi
+@{
+    ViewData["Title"] = "Sepet İçeriği Güncelle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Sepet İçeriği Güncelleme</h1>
+
+<div class="container mt-5">
+
+    <div class="card-body">
+        <form method="post" asp-action="Update" asp-controller="SepetIcerigi">
+
+            <input type="hidden" asp-for="ID" />
+
+            <div class="mb-3">
+                <label for="SepetID" class="form-label fw-bold">Sepet</label>
+                <select asp-for="SepetID" class="form-control">
+                    <option value="">-- Sepet Seçiniz --</option>
+                    @foreach (var sepet in ViewBag.Sepetler)
+                    {
+                        <option value="@sepet.ID" selected="@(sepet.ID == Model.SepetID)">Sepet ID: @sepet.ID</option>
+                    }
+                </select>
+                <span asp-validation-for="SepetID" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label for="UrunID" class="form-label fw-bold">Ürün</label>
+                <select asp-for="UrunID" class="form-control">
+                    <option value="">-- Ürün Seçiniz --</option>
+                    @foreach (var urun in ViewBag.Urunler)
+                    {
+                        <option value="@urun.ID" selected="@(urun.ID == Model.UrunID)">@urun.UrunAdi - @urun.Fiyat.ToString("C2")</option>
+                    }
+                </select>
+                <span asp-validation-for="UrunID" class="text-danger"></span>
+            </div>
+
+            <div class="mb-4">
+                <label for="Adet" class="form-label fw-bold">Adet</label>
+                <input type="number" asp-for="Adet" class="form-control" placeholder="Ürün adedini giriniz" min="1" />
+                <span asp-validation-for="Adet" class="text-danger"></span>
+            </div>
+
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary btn-lg">
+                    <i class="bi bi-check-circle me-2"></i>Güncelle
+                </button>
+                <a asp-action="List" asp-route-sepetId="@Model.SepetID" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left me-2"></i>Geri Dön
+                </a>
+            </div>
+
+        </form>
+    </div>
+
+</div>
